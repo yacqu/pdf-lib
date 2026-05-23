@@ -154,6 +154,10 @@ class PDFContext {
 
     if (types.length === 0) return result;
 
+    // If the ref resolved to nothing (object was invalid/skipped during parse),
+    // return undefined gracefully instead of throwing UnexpectedObjectTypeError.
+    if (result === undefined && ref instanceof PDFRef) return undefined;
+
     for (let idx = 0, len = types.length; idx < len; idx++) {
       const type = types[idx];
       if (type === PDFNull) {
